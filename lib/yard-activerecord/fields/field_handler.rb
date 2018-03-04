@@ -11,12 +11,13 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
     handles method_call(:timestamp)
     handles method_call(:datetime)
     handles method_call(:date)
+    handles method_call(:bigint)
 
     def process
       return unless statement.namespace.jump(:ident).source == 't'
       method_name = call_params.first
 
-      return if method_name['_id'] # Skip all id fields, associations will handle that
+      # return if method_name['_id'] # Skip all id fields, associations will handle that
 
       ensure_loaded! P(globals.klass)
       namespace = P(globals.klass)
@@ -41,7 +42,7 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
     end
 
     def description(method_name)
-      '' # "Database field value of #{method_name}. Defined in {file:db/schema.rb}"
+      "Returns the value of attribute #{method_name}" # "Database field value of #{method_name}. Defined in {file:db/schema.rb}"
     end
 
     def get_tag(tag, text, return_classes)
