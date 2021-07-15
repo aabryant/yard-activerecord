@@ -12,6 +12,12 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
     handles method_call(:datetime)
     handles method_call(:date)
     handles method_call(:bigint)
+    handles method_call(:jsonb)
+    handles method_call(:geometry)
+    handles method_call(:st_point)
+    handles method_call(:point)
+    handles method_call(:geography)
+    handles method_call(:decimal)
 
     def process
       return unless statement.namespace.jump(:ident).source == 't'
