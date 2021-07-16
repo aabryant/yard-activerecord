@@ -38,9 +38,6 @@ The plugin will then document all attributes in your documentation.
 All attributes will be marked as writable. I will update the plugin to include
 handling of `attr_accessible` at a later point.
 
-Please note that any reference-fields that ends with `_id` will not be handled
-as an attribute. Please see Associations.
-
 There is an issue with namespaced classes. Currently this plugin will try and
 fetch a class with a namespace if it does not find one at the first try.
 
@@ -76,6 +73,19 @@ methods simply as aliases for the associated object.
 
 The plugin will add class methods for any scopes you have defined in your
 models.
+
+## Tags
+
+The `@!active_attribute` tag has been added. You can treat this exactly the same
+way as you would the `@!attribute` tag, but it won't overwrite the status of a
+field as belonging to the database and is compatible with `enum` and
+`jsonb_accessor` definitions.
+
+## enum and jsonb_accessor
+
+Both `enum` and `jsonb_accessor` have been given simple handling and possess
+their own groups. Their definition blocks will be displayed in their
+descriptions.
 
 ## Validations ##
 
