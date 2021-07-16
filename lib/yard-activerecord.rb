@@ -10,7 +10,11 @@ $LOAD_PATH << root unless $LOAD_PATH.include? root
 
 require 'yard-activerecord/fields/create_table_handler'
 require 'yard-activerecord/fields/define_handler'
+require 'yard-activerecord/fields/enum_handler'
 require 'yard-activerecord/fields/field_handler'
+require 'yard-activerecord/fields/jsonb_handler'
+
+require 'yard-activerecord/tags/active_attribute'
 
 require 'yard-activerecord/associations/belongs_to_handler'
 require 'yard-activerecord/associations/has_one_handler'

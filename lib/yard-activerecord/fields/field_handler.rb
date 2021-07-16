@@ -23,8 +23,6 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
       return unless statement.namespace.jump(:ident).source == 't'
       method_name = call_params.first
 
-      # return if method_name['_id'] # Skip all id fields, associations will handle that
-
       ensure_loaded! P(globals.klass)
       namespace = P(globals.klass)
       return if namespace.nil?
@@ -38,17 +36,14 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
           next
         end
         rw_object = register YARD::CodeObjects::MethodObject.new(namespace, name)
-        rw_object.docstring = description(name)
+        rw_object.docstring = "Returns the value of the database field #{method_name}."
         rw_object.docstring.add_tag get_tag(:return, '', class_name)
+        rw_object.group = 'Active Record Database Field Summary'
         rw_object.dynamic = true
         method_definition[rw] = rw_object
       end
 
       namespace.instance_attributes[method_name.to_sym] = method_definition
-    end
-
-    def description(method_name)
-      "Returns the value of attribute #{method_name}" # "Database field value of #{method_name}. Defined in {file:db/schema.rb}"
     end
 
     def get_tag(tag, text, return_classes)
@@ -60,6 +55,8 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
     def class_name
       if ['datetime', 'timestamp'].include?(caller_method)
         'DateTime'
+      elsif ['geography', 'st_point'].include?(caller_method)
+        'Point'
       else
         caller_method.capitalize
       end
