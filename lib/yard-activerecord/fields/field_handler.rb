@@ -53,10 +53,13 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
     private
 
     def class_name
-      if ['datetime', 'timestamp'].include?(caller_method)
+      case caller_method
+      when 'datetime', 'timestamp'
         'DateTime'
-      elsif ['geography', 'st_point'].include?(caller_method)
+      when 'geography', 'st_point'
         'Point'
+      when 'jsonb'
+        'Hash'
       else
         caller_method.capitalize
       end
