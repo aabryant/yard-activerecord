@@ -25,7 +25,7 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
           enum.docstring << "Returns the value of the database field #{enum_name}."
         end
         enum.group = 'Enum Summary'
-        enum.docstring << "\n<br>\n<br>\n<b>Enum Values:</b>\n<br>\n  #{statement.source}"
+        enum.docstring << "\n<br>\n<br>\n<b>Enum Values:</b>\n<br>\n<pre class='code ruby'><code class='ruby'>#{statement.source}</code></pre>"
       end
       namespace.instance_attributes[enum_name.to_sym] ||= method_definition
     end

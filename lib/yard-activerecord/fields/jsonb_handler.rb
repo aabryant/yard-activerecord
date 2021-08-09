@@ -20,12 +20,13 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
         unless jsonb
           jsonb = register YARD::CodeObjects::MethodObject.new(namespace, name)
           method_definition[rw] = jsonb
+          jsonb.docstring.add_tag(YARD::Tags::Tag.new(:return, 'a hash containing the specified keys', 'Hash'))
         end
         if jsonb.docstring.empty?
           jsonb.docstring = "Returns the value of the database field #{jsonb_name}."
         end
         jsonb.group = 'Jsonb Summary'
-        jsonb.docstring << "\n<br>\n<br>\n<b>Jsonb Values:</b>\n<br>\n#{shift_left(statement.source)}"
+        jsonb.docstring << "\n<br>\n<br>\n<b>Jsonb Values:</b>\n<br>\n<pre class='code ruby'><code class='ruby'>#{shift_left(statement.source)}</code></pre>"
       end
       namespace.instance_attributes[jsonb_name.to_sym] ||= method_definition
     end
