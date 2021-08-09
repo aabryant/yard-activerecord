@@ -28,6 +28,7 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
         enum.docstring << "\n<br>\n<br>\n<b>Enum Values:</b>\n<br>\n<pre class='code ruby'><code class='ruby'>#{statement.source}</code></pre>"
       end
       namespace.instance_attributes[enum_name.to_sym] ||= method_definition
+      namespace.groups << 'Enum Summary' unless namespace.groups.include? 'Enum Summary'
     end
   end
 end

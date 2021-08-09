@@ -32,7 +32,7 @@ module YARD::Handlers::Ruby::ActiveRecord::Fields
       { read: method_name, write: "#{method_name}=" }.each do |(rw, name)|
         method = method_definition[rw]
         if method
-          method.docstring.add_tag( get_tag(:return, '', class_name) ) unless method.has_tag?( :return )
+          method.docstring.add_tag(get_tag(:return, '', class_name)) unless method.has_tag?(:return)
           next
         end
         rw_object = register YARD::CodeObjects::MethodObject.new(namespace, name)

@@ -28,10 +28,14 @@ module YARD::Handlers::Ruby::ActiveRecord::Delegations
         end
         object = register YARD::CodeObjects::MethodObject.new(namespace, method_name)
         object.group = "Delegated Instance Attributes"
+        tags = object.docstring.tags.clone
         object.docstring = "Alias for #{class_name}##{original_method_name}"
-        object.docstring.add_tag get_tag(:return,
-            "#{class_name}##{method_name}", 'Object')
-        object.docstring.add_tag get_tag(:see,"Module#delegate",nil,
+        tags.each { |t| object.docstring.add_tag(t) }
+        unless object.has_tag?(:return)
+          object.docstring.add_tag(get_tag(:return,
+              "#{class_name}##{method_name}", 'Object'))
+        end
+        object.docstring.add_tag get_tag(:see,"Module#delegate", nil,
             "http://api.rubyonrails.org/classes/Module.html#method-i-delegate")
       end
       group_name = "Delegated Instance Attributes"
@@ -41,7 +45,7 @@ module YARD::Handlers::Ruby::ActiveRecord::Delegations
     private
 
     def get_tag(tag, text, return_classes = [], name=nil)
-      YARD::Tags::Tag.new(tag, text, [return_classes].flatten,name)
+      YARD::Tags::Tag.new(tag, text, [return_classes].flatten, name)
     end
   end
 end
